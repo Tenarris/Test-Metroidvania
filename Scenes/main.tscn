@@ -1,0 +1,76 @@
+[gd_scene load_steps=9 format=3 uid="uid://cqavl1n62as58"]
+
+[ext_resource type="PackedScene" uid="uid://326jbyteu4sj" path="res://Scenes/player.tscn" id="1_d4016"]
+[ext_resource type="Script" path="res://Scenes/main.gd" id="1_hykmy"]
+[ext_resource type="PackedScene" uid="uid://bhaagss38a2nd" path="res://Scenes/menu_settings.tscn" id="3_gcaw6"]
+[ext_resource type="Texture2D" uid="uid://c36vyicwyjcch" path="res://Assets/Temp_BG_Tex.png" id="3_pcnq0"]
+[ext_resource type="PackedScene" uid="uid://dfxpgytc3d2f3" path="res://Scenes/enemy.tscn" id="4_7gx1s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7uw4h"]
+size = Vector2(1920, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gaubv"]
+size = Vector2(80, 1104)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jpoka"]
+size = Vector2(80, 1104)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_hykmy")
+
+[node name="Player" parent="." instance=ExtResource("1_d4016")]
+position = Vector2(1762, 983)
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Screen Borders" type="Node2D" parent="Background"]
+
+[node name="Floor" type="StaticBody2D" parent="Background/Screen Borders"]
+collision_mask = 15
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Screen Borders/Floor"]
+position = Vector2(960, 1064)
+scale = Vector2(8.20513, 0.444445)
+texture = ExtResource("3_pcnq0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/Screen Borders/Floor"]
+position = Vector2(960, 1064)
+shape = SubResource("RectangleShape2D_7uw4h")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="RightWall" type="StaticBody2D" parent="Background/Screen Borders"]
+collision_mask = 15
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Screen Borders/RightWall"]
+position = Vector2(1904, 552)
+scale = Vector2(0.34188, 6.13333)
+texture = ExtResource("3_pcnq0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/Screen Borders/RightWall"]
+position = Vector2(1904, 552)
+shape = SubResource("RectangleShape2D_gaubv")
+
+[node name="LeftWall" type="StaticBody2D" parent="Background/Screen Borders"]
+collision_mask = 15
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Screen Borders/LeftWall"]
+position = Vector2(16, 552)
+scale = Vector2(0.34188, 6.13333)
+texture = ExtResource("3_pcnq0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/Screen Borders/LeftWall"]
+position = Vector2(16, 552)
+shape = SubResource("RectangleShape2D_jpoka")
+
+[node name="ProjectilesFolder" type="Node2D" parent="."]
+
+[node name="Menu" type="CanvasLayer" parent="."]
+
+[node name="MenuSettings" parent="Menu" instance=ExtResource("3_gcaw6")]
+visible = false
+
+[node name="Enemy" parent="." instance=ExtResource("4_7gx1s")]
+position = Vector2(541, 926)
+
+[connection signal="projectile_spawn" from="Player" to="." method="_on_player_projectile_spawn"]
+[connection signal="enemy_projectile_spawn" from="Enemy" to="." method="_on_enemy_enemy_projectile_spawn"]

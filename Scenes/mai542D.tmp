@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://cqavl1n62as58"]
+
+[ext_resource type="PackedScene" uid="uid://326jbyteu4sj" path="res://Scenes/player.tscn" id="1_d4016"]
+[ext_resource type="Script" path="res://Scenes/main.gd" id="1_hykmy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7uw4h"]
+size = Vector2(2645, 78)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_hykmy")
+
+[node name="Player" parent="." instance=ExtResource("1_d4016")]
+position = Vector2(1327, 1365)
+
+[node name="Screen Borders" type="Node2D" parent="."]
+
+[node name="Floor" type="StaticBody2D" parent="Screen Borders"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Screen Borders/Floor"]
+position = Vector2(1277.5, 1480)
+shape = SubResource("RectangleShape2D_7uw4h")
+
+[node name="Projectiles" type="Node2D" parent="."]
+
+[connection signal="projectile" from="Player" to="." method="_on_player_projectile"]

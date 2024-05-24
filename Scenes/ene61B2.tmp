@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://dfxpgytc3d2f3"]
+
+[ext_resource type="Script" path="res://Scenes/enemy.gd" id="1_py8qu"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rmlbu"]
+radius = 7.0
+height = 28.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3jse5"]
+size = Vector2(413.6, 108.8)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j3gfd"]
+radius = 54.4
+
+[node name="Enemy" type="CharacterBody2D"]
+scale = Vector2(2.5, 2.5)
+script = ExtResource("1_py8qu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_rmlbu")
+
+[node name="DetectionRange" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
+position = Vector2(0, 48)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_3jse5")
+
+[node name="AttackRange" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+position = Vector2(-5.96046e-08, 48)
+shape = SubResource("CircleShape2D_j3gfd")
+
+[connection signal="body_entered" from="DetectionRange" to="." method="_on_detection_range_body_entered"]
+[connection signal="body_exited" from="DetectionRange" to="." method="_on_detection_range_body_exited"]
