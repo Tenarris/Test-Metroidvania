@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://326jbyteu4sj"]
+
+[ext_resource type="Script" path="res://Scenes/player.gd" id="1_4s1j6"]
+[ext_resource type="Texture2D" uid="uid://buibt3t7b3l1b" path="res://Assets/player.png" id="2_ix46l"]
+
+[node name="Player" type="CharacterBody2D"]
+scale = Vector2(2.5, 2.5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_4s1j6")
+projectile_cooldown = 0.2
+max_air_jumps = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ix46l")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(3, -13, -1, -12, -10, -1, -10, 6, -13, 11, -13, 16, -10, 16, -8, 11, -7, 16, -4, 16, -4, 10, -3, 2, 1, -2, 5, -3, 7, -6, 6, -11)
+
+[node name="ProjectileStartPos" type="Marker2D" parent="."]
+position = Vector2(10.8, -6)
+
+[node name="ProjectileCooldownTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="char_facing_left" from="." to="." method="_on_char_facing_left"]

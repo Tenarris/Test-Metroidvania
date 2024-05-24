@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://dawikuuhr586u"]
+
+[ext_resource type="Script" path="res://Scenes/enemy_projectile.gd" id="1_oqnom"]
+[ext_resource type="Texture2D" uid="uid://c7qmfooxcnyua" path="res://Assets/Projectile.png" id="2_spge3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tohsi"]
+radius = 3.0
+height = 20.0
+
+[node name="EnemyProjectile" type="Area2D"]
+scale = Vector2(2, 2)
+collision_layer = 8
+collision_mask = 3
+script = ExtResource("1_oqnom")
+speed = 350
+duration = 1.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_spge3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_tohsi")
+
+[node name="DurationTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="DurationTimer" to="." method="_on_duration_timer_timeout"]

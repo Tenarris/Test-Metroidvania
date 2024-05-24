@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://dfxpgytc3d2f3"]
+
+[ext_resource type="Script" path="res://Scenes/enemy.gd" id="1_py8qu"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rmlbu"]
+radius = 7.0
+height = 28.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3jse5"]
+size = Vector2(445.6, 108.8)
+
+[node name="Enemy" type="CharacterBody2D"]
+scale = Vector2(2.5, 2.5)
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_py8qu")
+HP = 3
+iframes = 0.1
+speed = 130.0
+projectile_cooldown = 1.75
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_rmlbu")
+
+[node name="DetectionRange" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
+position = Vector2(0, 48)
+shape = SubResource("RectangleShape2D_3jse5")
+
+[node name="MovementTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="EnemyProjectileTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="body_entered" from="DetectionRange" to="." method="_on_detection_range_body_entered"]
+[connection signal="body_exited" from="DetectionRange" to="." method="_on_detection_range_body_exited"]
